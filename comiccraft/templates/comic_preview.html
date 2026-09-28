@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Comic Preview</title>
+    <style>
+        :root {
+            --paper: #fff8ee;
+            --ink: #111111;
+            --red: #ff5e5b;
+            --yellow: #ffd75b;
+            --blue: #5ac8fa;
+            --shadow: #1b1b1b;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 32px 18px 60px;
+            background:
+                linear-gradient(135deg, #f9d66d 0%, #f9b9b0 20%, #f4f1ea 100%);
+            color: var(--ink);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: clamp(2.2rem, 4vw, 3rem);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 26px;
+            text-shadow: 3px 3px 0 var(--yellow);
+        }
+
+        .panel-grid {
+            display: grid;
+            gap: 28px;
+        }
+
+        .panel {
+            background: var(--paper);
+            border: 4px solid var(--ink);
+            border-radius: 18px;
+            box-shadow: 10px 10px 0 var(--shadow);
+            padding: 18px 18px 22px;
+            transform: rotate(var(--tilt, 0deg));
+        }
+
+        .panel:nth-child(odd) { --tilt: -0.8deg; }
+        .panel:nth-child(even) { --tilt: 0.8deg; }
+
+        .panel h2 {
+            margin: 0 0 16px;
+            font-size: clamp(1.4rem, 2vw, 2rem);
+            line-height: 1.2;
+            text-transform: uppercase;
+        }
+
+        .panel img {
+            display: block;
+            width: 100%;
+            max-height: 520px;
+            object-fit: cover;
+            border: 4px solid var(--ink);
+            border-radius: 12px;
+            background: #ffffff;
+        }
+
+        .description {
+            margin: 16px 0 10px;
+            font-style: italic;
+            font-size: 1.05rem;
+            font-weight: 700;
+        }
+
+        .story {
+            margin: 0;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        .download {
+            display: block;
+            margin: 30px auto 0;
+            max-width: 440px;
+            text-align: center;
+            padding: 18px 24px;
+            border: 4px solid var(--ink);
+            border-radius: 14px;
+            background: linear-gradient(180deg, #ff9e53, #ff6f61);
+            color: white;
+            font-weight: 900;
+            text-decoration: none;
+            box-shadow: 7px 7px 0 var(--shadow);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>📖 Your Comic</h1>
+
+        <div class="panel-grid">
+            {% for panel in layout %}
+            <div class="panel">
+                <h2>Panel {{ panel.panel }}: {{ panel.title }}</h2>
+                <img src="{{ panel.image }}" alt="Comic Panel">
+                <p class="description">{{ panel.scene_description }}</p>
+                <p class="story">{{ panel.story }}</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <a class="download" href="{{ pdf_path }}" download>Download Your Comic as PDF 📥</a>
+    </div>
+</body>
+</html>
